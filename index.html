@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#12100f" />
+  <title>Skinhead Richard • Tribute LP Card SR-001</title>
+  <style>
+    :root{color-scheme:dark;--orange:#ff651a;--cream:#fff0d9}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 25%,#3c2119 0%,#161313 50%,#080808 100%);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--cream);text-align:center}
+    header{padding:20px 14px 4px} .eyebrow{color:#ff9b65;letter-spacing:.16em;font-size:.7rem;font-weight:800} h1{font-size:clamp(1.15rem,4vw,1.8rem);line-height:1.15;margin:7px auto 4px;max-width:580px} .sub{font-size:.86rem;opacity:.8;margin:4px}
+    main{width:min(100%,560px);margin:auto;padding:8px 18px 28px} .scene{perspective:1400px;margin:auto;width:min(100%,375px);aspect-ratio:0.78;touch-action:manipulation;cursor:pointer;outline:none;display:block;position:relative} .scene:focus-visible{outline:3px solid var(--orange);outline-offset:6px;border-radius:16px}
+    .card{position:relative;width:100%;height:100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.2,.7,.15,1)} .scene.flipped .card{transform:rotateY(180deg)} .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border-radius:5%;background:#1f1512;box-shadow:0 20px 18px #0009} .side.back{transform:rotateY(180deg)} img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+    .hint{font-size:.8rem;color:#dbc2ad;margin:16px 0 12px} .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px} button,.save{background:#231916;border:1px solid #a35c3a;border-radius:10px;color:#fff0d9;padding:11px 13px;font:inherit;font-size:.86rem;font-weight:700;text-decoration:none;cursor:pointer;min-width:118px} button:hover,.save:hover{background:#502519;border-color:var(--orange)} button:focus-visible,.save:focus-visible{outline:3px solid var(--orange);outline-offset:3px} .primary{background:#b84315;border-color:#ff9c64} .primary:hover{background:#d65a25} .check{color:#ffbe91;font-size:.73rem;margin:18px 5px 0}
+    @media (prefers-reduced-motion:reduce){.card{transition:none}}
+  </style>
+</head>
+<body>
+<header><div class="eyebrow">RUDE BOY RECORDS · SR-001</div><h1>Skinhead Richard Sings Ska and Soul</h1><p class="sub">Collectible Tribute LP Card · Tap to flip</p></header>
+<main>
+  <div class="scene" id="scene" role="button" tabindex="0" aria-label="Flip the tribute LP card to view the other side" aria-pressed="false">
+    <div class="card"><div class="side front"><img src="front.png" alt="Front of Skinhead Richard Sings Ska and Soul collectible LP card"></div><div class="side back"><img src="back.png" alt="Back of Skinhead Richard Sings Ska and Soul collectible LP card"></div></div>
+  </div>
+  <p class="hint" id="status" aria-live="polite">Showing front · Automatically flips every 5 seconds</p>
+  <div class="actions"><button type="button" class="primary" id="flip">↻ Flip Card</button><button type="button" id="auto" aria-pressed="true">⏸ Pause Auto Flip</button></div>
+  <div class="actions" style="margin-top:10px"><a class="save" href="front.png" download="Skinhead_Richard_Tribute_LP_Front.png">↓ Save Front</a><a class="save" href="back.png" download="Skinhead_Richard_Tribute_LP_Back.png">↓ Save Back</a></div>
+  <p class="check">Vintage tribute artwork · A fictional collectible · Music brings us together</p>
+</main>
+<script>
+(()=>{
+ const scene=document.getElementById('scene'), flip=document.getElementById('flip'), auto=document.getElementById('auto'), status=document.getElementById('status');
+ let flipped=false, playing=!window.matchMedia('(prefers-reduced-motion: reduce)').matches, timer=null;
+ function display(){scene.classList.toggle('flipped',flipped);scene.setAttribute('aria-pressed',String(flipped));status.textContent=`Showing ${flipped?'back':'front'} · ${playing?'Automatically flips every 5 seconds':'Auto flip paused'}`;auto.setAttribute('aria-pressed',String(playing));auto.textContent=playing?'⏸ Pause Auto Flip':'▶ Resume Auto Flip'}
+ function stop(){if(timer!==null){clearInterval(timer);timer=null}}
+ function start(){stop();if(playing)timer=setInterval(()=>{if(document.visibilityState==='visible'){flipped=!flipped;display()}},5000)}
+ function toggleFlip(){flipped=!flipped;display();start()}
+ scene.addEventListener('click',toggleFlip);scene.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleFlip()}});flip.addEventListener('click',toggleFlip);
+ auto.addEventListener('click',()=>{playing=!playing;display();start()});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')start()});display();start();
+})();
+</script>
+</body>
+</html>
