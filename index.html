@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<meta name="description" content="Skinhead Richard Sings Ska and Soul: SR-001 holographic tribute LP collectible card.">
+<title>SR-001 · Skinhead Richard Tribute LP Card</title>
+<style>
+:root { color-scheme:dark; --orange:#f15a24; --cream:#ffedca; }
+* { box-sizing:border-box; }
+html,body {min-height:100%;margin:0}
+body {background:radial-gradient(ellipse at 50% 19%,#382118 0,#161516 49%,#090909 100%);color:var(--cream);font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;justify-content:center;min-height:100svh;overflow-x:hidden;}
+.page {width:min(100%,660px);padding:24px 15px 28px;text-align:center;}
+.eyebrow {font-size:.8rem;font-weight:900;letter-spacing:.18em;color:var(--orange);margin-bottom:8px}
+h1 {font-size:clamp(1.25rem,4.4vw,1.85rem);line-height:1.14;margin:0 0 6px;text-wrap:balance}
+.sub {margin:0 0 20px;color:#decdbd;font-size:.85rem}
+.scene {perspective:1400px;perspective-origin:50% 45%;display:grid;place-items:center;touch-action:pan-y;}
+.card {position:relative;width:min(100%,385px,calc((100svh - 230px)*.8));aspect-ratio:1122/1402;max-height:calc(100svh - 230px);min-width:200px;cursor:pointer;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(calc(var(--flip,0deg) + var(--ry,0deg)));transition:transform 900ms cubic-bezier(.2,.72,.13,1),filter .3s;filter:drop-shadow(0 24px 24px #000a);outline:none;user-select:none;-webkit-user-select:none;}
+.card:focus-visible {outline:3px solid #fff6;outline-offset:7px;border-radius:16px;}
+.card::after {content:"";position:absolute;inset:0;pointer-events:none;border-radius:5.8% / 4.7%;transform:translateZ(2px);background:linear-gradient(var(--light-angle,115deg),transparent 21%,rgba(255,255,255,.04) 35%,rgba(255,255,255,.33) 48%,rgba(255,255,255,.03) 54%,transparent 68%),repeating-linear-gradient(111deg,transparent 0 18px,rgba(99,238,255,.06) 19px,rgba(255,81,186,.07) 21px,transparent 23px);mix-blend-mode:screen;opacity:var(--shine,.38);}
+.face {position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border-radius:5.8% / 4.7%;box-shadow:inset 0 0 2px #fff4;}
+.face img {width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;}
+.back {transform:rotateY(180deg);}
+.card.flipped {--flip:180deg;}
+.instructions {margin:13px auto 12px;font-size:.8rem;color:#cfc1b1}
+.controls {display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px auto 5px}
+button,a.action {border-radius:9px;border:1px solid #cf6e37;background:#201b19;color:#fff3df;padding:11px 13px;font-size:.84rem;font-weight:800;letter-spacing:.01em;cursor:pointer;min-height:44px;text-decoration:none}
+button.primary {background:var(--orange);color:#15100f;border-color:var(--orange)}
+button:hover,a.action:hover {filter:brightness(1.2)}
+button:focus-visible,a.action:focus-visible {outline:3px solid white;outline-offset:3px}
+.note {margin:12px auto 0;color:#b7a99b;max-width:390px;font-size:.74rem;line-height:1.5}
+footer {font-size:.72rem;letter-spacing:.08em;margin-top:18px;color:#bda08a}
+@media (prefers-reduced-motion:reduce) {.card {transition-duration:.01ms}}
+@media (max-height:690px) {.page{padding-top:10px}.sub{margin-bottom:8px}.instructions{margin:5px auto}.card{max-height:calc(100svh - 190px)}}
+
+/* Reliable iPhone flip: switch the image at the invisible edge of the card. */
+.card{transform:rotateX(var(--rx,0deg)) rotateY(calc(var(--turn,0deg) + var(--ry,0deg)));filter:none;transition:transform 380ms ease-in-out;transform-style:preserve-3d;box-shadow:0 24px 25px #0009;border-radius:5.8% / 4.7%;}
+.card::after{transform:none;z-index:3;}
+.face{backface-visibility:visible;-webkit-backface-visibility:visible;transform:none!important;transition:none;z-index:1;}
+.face.front{opacity:1;}
+.face.back{opacity:0;}
+.card.flipped .face.front{opacity:0;}
+.card.flipped .face.back{opacity:1;}
+.card.turning{pointer-events:none;}
+@media(prefers-reduced-motion:reduce){.card{transition-duration:.01ms}}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="eyebrow">OVERPRODUCTIVE SKINHEAD · SR-001</div>
+  <h1>SKINHEAD RICHARD<br>SINGS SKA AND SOUL</h1>
+  <p class="sub">Holographic Tribute LP Collectible</p>
+  <div class="scene" id="scene">
+    <div id="card" class="card" role="button" tabindex="0" aria-label="Flip collectible card" aria-pressed="false" title="Tap to flip">
+      <div class="face front"><img src="front.png" alt="Holographic tribute LP card front" draggable="false"></div>
+      <div class="face back"><img src="back.png" alt="Holographic tribute LP card back with album artwork and track list" draggable="false"></div>
+    </div>
+  </div>
+  <div class="instructions" id="status">Tap the card to flip · Move your finger to tilt</div>
+  <div class="controls">
+    <button class="primary" id="flipButton" type="button">↻ Flip card</button>
+    <button id="autoButton" type="button" aria-pressed="true">⏸ Auto flip: On</button>
+    <button id="saveButton" type="button">↓ Save showing side</button>
+  </div>
+  <p class="note">On iPhone, if Save opens the picture instead of downloading it, press and hold the picture and choose <strong>Save to Photos</strong>.</p>
+  <footer>RUDE BOY RECORDS · MUSIC BRINGS US TOGETHER</footer>
+</main>
+<script>
+(()=>{
+'use strict';
+const card=document.getElementById('card'),scene=document.getElementById('scene');
+const status=document.getElementById('status'),flipButton=document.getElementById('flipButton');
+const autoButton=document.getElementById('autoButton'),saveButton=document.getElementById('saveButton');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let flipped=false,auto=!reduced,busy=false,lastAction=Date.now(),lastAuto=Date.now();
+let pointerDown=false,dragged=false,sx=0,sy=0,tick=0;
+const motion=reduced?0:380;
+const setTilt=(x,y)=>{card.style.setProperty('--rx',x.toFixed(2)+'deg');card.style.setProperty('--ry',y.toFixed(2)+'deg');card.style.setProperty('--light-angle',(115+y*2).toFixed(0)+'deg');card.style.setProperty('--shine',String(Math.max(.25,Math.min(.8,.4+Math.abs(x+y)/55))))};
+function updateLabel(){card.setAttribute('aria-pressed',String(flipped));status.textContent=(flipped?'Back':'Front')+' side · Tap to flip · Drag to tilt'}
+function flip(){
+if(busy)return;
+busy=true;card.classList.add('turning');lastAction=Date.now();lastAuto=lastAction;
+setTilt(0,0);
+if(!motion){flipped=!flipped;card.classList.toggle('flipped',flipped);updateLabel();busy=false;card.classList.remove('turning');return}
+card.style.transition='transform '+motion+'ms ease-in';
+card.style.setProperty('--turn','90deg');
+setTimeout(()=>{
+  flipped=!flipped;card.classList.toggle('flipped',flipped);updateLabel();
+  card.style.transition='none';card.style.setProperty('--turn','-90deg');
+  void card.offsetWidth;
+  card.style.transition='transform '+motion+'ms ease-out';
+  card.style.setProperty('--turn','0deg');
+  setTimeout(()=>{busy=false;card.classList.remove('turning');card.style.transition='';lastAuto=Date.now()},motion+30);
+},motion+10);
+}
+const updateAuto=()=>{autoButton.textContent=auto?'⏸ Auto flip: On':'▶ Auto flip: Off';autoButton.setAttribute('aria-pressed',String(auto))};
+card.addEventListener('click',()=>{if(!dragged)flip();dragged=false});
+flipButton.addEventListener('click',flip);
+card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}});
+autoButton.addEventListener('click',()=>{auto=!auto;lastAction=Date.now();updateAuto()});
+const pointerTilt=(x,y)=>{
+ const r=scene.getBoundingClientRect();
+ const u=Math.max(-1,Math.min(1,(x-(r.left+r.width/2))/(r.width/2)));
+ const v=Math.max(-1,Math.min(1,(y-(r.top+r.height/2))/(r.height/2)));
+ setTilt(-v*9,u*12);
+};
+scene.addEventListener('pointerdown',e=>{pointerDown=true;dragged=false;sx=e.clientX;sy=e.clientY;lastAction=Date.now()});
+scene.addEventListener('pointermove',e=>{if(busy)return;if(e.pointerType==='mouse'||pointerDown){pointerTilt(e.clientX,e.clientY);lastAction=Date.now();if(pointerDown&&Math.hypot(e.clientX-sx,e.clientY-sy)>14)dragged=true}});
+scene.addEventListener('pointerup',()=>{pointerDown=false;if(!busy)setTilt(0,0)});
+scene.addEventListener('pointerleave',()=>{pointerDown=false;if(!busy)setTilt(0,0)});
+setInterval(()=>{if(auto&&!busy&&!document.hidden&&Date.now()-lastAction>=3500&&Date.now()-lastAuto>=6000)flip()},500);
+if(!reduced)setInterval(()=>{if(!busy&&!pointerDown&&!document.hidden&&Date.now()-lastAction>4700){tick+=.07;setTilt(Math.sin(tick)*2.1,Math.cos(tick*.8)*2.9)}},90);
+saveButton.addEventListener('click',()=>{
+ const file=flipped?'back.png':'front.png';
+ const a=document.createElement('a');a.href=file;a.download='Skinhead-Richard-SR001-'+(flipped?'Back':'Front')+'.png';document.body.append(a);a.click();a.remove();
+});
+for(const img of document.querySelectorAll('.face img'))img.addEventListener('error',()=>{status.textContent='Image missing: '+img.getAttribute('src')+' — upload that file to the repository root.'});
+updateLabel();updateAuto();
+})();
+</script>
+</body>
+</html>
